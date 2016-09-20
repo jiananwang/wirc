@@ -8,7 +8,7 @@ import gnu.io.CommPortIdentifier;
 import gnu.io.SerialPort;
 
 public class SerialPortRW {
-	void connect(String portName) throws Exception {
+	public void connect(String portName) throws Exception {
 		CommPortIdentifier portIdentifier = CommPortIdentifier.getPortIdentifier(portName);
 		if (portIdentifier.isCurrentlyOwned()) {
 			System.out.println("Error: Port is currently in use");
