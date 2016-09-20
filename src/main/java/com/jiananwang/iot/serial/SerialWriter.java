@@ -14,9 +14,22 @@ public class SerialWriter implements Runnable {
 	@Override
 	public void run() {
 		try {
-			int c = 0;
-			while ((c = System.in.read()) > -1) {
-				this.out.write(c);
+			while (true) {
+				// byte[] b = new byte[] { (byte) 0xA0, 0x03, (byte) 0xFF, 0x00,
+				// 0x5E };
+
+				byte[] b = new byte[] { (byte) 0xA0, 0x03, (byte) 0xFF, 0x31, 0x2D };
+
+				// byte[] b = new byte[] { (byte) 0xA0, 0x05, (byte) 0xFF, 0x11,
+				// 0x04, 0x01, 0x46 };
+				this.out.write(b);
+
+				try {
+					Thread.sleep(5000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
