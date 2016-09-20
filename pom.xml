@@ -25,6 +25,9 @@
 	</properties>
 
 	<dependencies>
+<!-- 	***************************************************************** -->
+<!-- 	* boot                                                          * -->
+<!-- 	***************************************************************** -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-activemq</artifactId>
@@ -45,12 +48,29 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
+		
+<!-- 	***************************************************************** -->
+<!-- 	* MySQL                                                         * -->
+<!-- 	***************************************************************** -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+		
+<!-- 	***************************************************************** -->
+<!-- 	* RXTX                                                          * -->
+<!-- 	***************************************************************** -->
+		<dependency>
+		    <groupId>org.rxtx</groupId>
+		    <artifactId>rxtx</artifactId>
+		    <version>2.1.7</version>
+		</dependency>
+
+		
+<!-- 	***************************************************************** -->
+<!-- 	* test                                                          * -->
+<!-- 	***************************************************************** -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
