@@ -1,0 +1,20 @@
+1. install driver
+  -> unzip, make, and follow instruction
+
+2. find out usb device
+  -> dmesg | grep tty
+
+3. test with cutecom
+  -> sudo apt-get install cutecom
+  -> sudo cutecom
+
+4. (optional) enable root
+  -> sudo passwd root
+  -> sudo passwd -p root
+
+5. JAVA_HOME
+  -> /etc/environment
+  -> JAVA_HOME=/usr/lib/jvm/default-java
+
+6. install RXTX
+  -> sudo apt-get install librxtx-java
