@@ -3,11 +3,28 @@ package com.jiananwang.iot.serial;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Scope;
+import org.springframework.core.task.TaskExecutor;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.web.context.ContextLoader;
+
 import gnu.io.CommPort;
 import gnu.io.CommPortIdentifier;
 import gnu.io.SerialPort;
 
+@Service
 public class SerialPortRW {
+	@Autowired
+	private ApplicationContext appContext;
+	
+	@Autowired
+	private TaskExecutor taskExecutor;
+	
+	
 	public void connect(String portName) throws Exception {
 		CommPortIdentifier portIdentifier = CommPortIdentifier.getPortIdentifier(portName);
 		if (portIdentifier.isCurrentlyOwned()) {
@@ -24,12 +41,22 @@ public class SerialPortRW {
 				InputStream in = serialPort.getInputStream();
 				OutputStream out = serialPort.getOutputStream();
 
-				(new Thread(new SerialReader(in))).start();
-				(new Thread(new SerialWriter(out))).start();
+//				(new Thread(new SerialReader(in))).start();
+//				(new Thread(new SerialWriter(out))).start();
+				startRWThread(in, out);
 
 			} else {
 				System.out.println("Error: Only serial ports are handled by this example.");
 			}
 		}
+	}
+	
+	private void startRWThread(InputStream in, OutputStream out) {
+//	    ThreadPoolTaskExecutor taskExecutor = (ThreadPoolTaskExecutor) appContext.getBean("taskExecutor");
+	    SerialWriter writeTask = new SerialWriter(appContext, out);
+	    SerialReader readTask = new SerialReader(appContext, in);
+
+	    taskExecutor.execute(readTask);
+	    taskExecutor.execute(writeTask);
 	}
 }

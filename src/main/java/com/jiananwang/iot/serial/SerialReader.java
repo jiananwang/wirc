@@ -5,13 +5,23 @@ import java.io.InputStream;
 import java.util.Arrays;
 
 import org.apache.commons.codec.binary.Hex;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.context.ApplicationContext;
 
+@Configurable
 public class SerialReader implements Runnable {
-	InputStream in;
+	private ApplicationContext appContext;
+	
+	private InputStream in;
 
-	public SerialReader(InputStream in) {
+	public SerialReader(ApplicationContext appContext, InputStream in) {
+		this.appContext = appContext;
 		this.in = in;
 	}
+	
+//	public void init (InputStream in) {
+//		this.in = in;
+//	}
 
 	@Override
 	public void run() {
