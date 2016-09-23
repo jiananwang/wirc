@@ -28,7 +28,7 @@ public class ReceiverService {
 
     /**
      * Add byte[] into queue, update size accordingly.
-     * @param bytes
+     * @param bytes Incoming byte[]
      */
     public void put(byte[] bytes) {
         if (bytes == null)
@@ -44,7 +44,7 @@ public class ReceiverService {
 
     /**
      * Pop one byte[] from queue, update size accordingly
-     * @return
+     * @return Popped byte[]
      */
     public byte[] pull() {
         byte[] retval = this.queue.poll();
