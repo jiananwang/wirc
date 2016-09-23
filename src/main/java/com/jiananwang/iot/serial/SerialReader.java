@@ -4,12 +4,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 
+import com.jiananwang.iot.service.BytesQueueService;
 import org.apache.commons.codec.binary.Hex;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.ApplicationContext;
 
 @Configurable
 public class SerialReader implements Runnable {
+	Logger logger = LoggerFactory.getLogger(BytesQueueService.class);
+
 	private ApplicationContext appContext;
 	
 	private InputStream in;
@@ -19,9 +24,6 @@ public class SerialReader implements Runnable {
 		this.in = in;
 	}
 	
-//	public void init (InputStream in) {
-//		this.in = in;
-//	}
 
 	@Override
 	public void run() {
@@ -29,15 +31,26 @@ public class SerialReader implements Runnable {
 		int len = -1;
 		try {
 			while ((len = this.in.read(buffer)) > -1) {
-				// System.out.print(new String(buffer, 0, len));
-				// System.out.print(len);
-
 				byte[] dst = Arrays.copyOf(buffer, len);
+				put(dst);
 				System.out.print(Hex.encodeHex(dst));
 
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Send data to queue
+	 * @param bytes
+	 */
+	private void put(byte[] bytes) {
+		BytesQueueService bytesQueueService = (BytesQueueService)appContext.getBean("bytesQueueService");
+		if (bytesQueueService != null) {
+			bytesQueueService.put(bytes);
+		} else {
+			logger.error("cannot get application context");
 		}
 	}
 }
