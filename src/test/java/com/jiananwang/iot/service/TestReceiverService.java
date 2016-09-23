@@ -13,17 +13,17 @@ import org.springframework.util.Assert;
 @SpringBootTest
 @WebAppConfiguration
 public class TestReceiverService {
-    @Autowired private ReceiverService receiverService;
+    @Autowired private BytesQueueService bytesQueueService;
 
     @Test
     public void test() {
-        receiverService.put(new byte[]{0x00, 0x01});
-        receiverService.put(new byte[]{0x00, 0x01, 0x02});
+        bytesQueueService.put(new byte[]{0x00, 0x01});
+        bytesQueueService.put(new byte[]{0x00, 0x01, 0x02});
 
-        Assert.isTrue(receiverService.size() == 5);
+        Assert.isTrue(bytesQueueService.size() == 5);
 
-        receiverService.pull();
+        bytesQueueService.pull();
 
-        Assert.isTrue(receiverService.size() == 3);
+        Assert.isTrue(bytesQueueService.size() == 3);
     }
 }

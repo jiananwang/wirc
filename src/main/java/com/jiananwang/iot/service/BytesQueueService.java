@@ -12,8 +12,8 @@ import java.util.concurrent.LinkedBlockingDeque;
  *
  */
 @Service
-public class ReceiverService {
-    Logger logger = LoggerFactory.getLogger(ReceiverService.class);
+public class BytesQueueService {
+    Logger logger = LoggerFactory.getLogger(BytesQueueService.class);
 
     /**
      * Thread safe blocking queue for read and write. Note it receives byte[] instead of byte.
