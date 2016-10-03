@@ -46,7 +46,7 @@ public class BytesQueueService {
      * Pop one byte[] from queue, update size accordingly
      * @return Popped byte[]
      */
-    public byte[] pull() {
+    public byte[] poll() {
         byte[] retval = this.queue.poll();
         if (retval != null)
             this.size -= retval.length;

@@ -22,7 +22,7 @@ public class TestReceiverService {
 
         Assert.isTrue(bytesQueueService.size() == 5);
 
-        bytesQueueService.pull();
+        bytesQueueService.poll();
 
         Assert.isTrue(bytesQueueService.size() == 3);
     }

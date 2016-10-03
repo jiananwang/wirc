@@ -1,6 +1,5 @@
 package com.jiananwang.iot.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.PropertySource;
@@ -27,10 +26,12 @@ public class UploadService implements Runnable {
         while (true) {
             BytesQueueService bytesQueueService = (BytesQueueService)appContext.getBean("bytesQueueService");
             if (bytesQueueService != null) {
-                if (bytesQueueService.size() > 10) {
-                    bytesQueueService.pull();
-                    System.out.println();
-                    System.out.println(" queue size: " + bytesQueueService.size());
+                if (bytesQueueService.size() > 100) {
+                    while (bytesQueueService.size() > 0) {
+                        bytesQueueService.poll();
+                        //System.out.println();
+                        System.out.println(" queue size: " + bytesQueueService.size());
+                    }
                 }
             }
 
