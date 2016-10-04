@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 
-import com.jiananwang.iot.service.BytesQueueService;
+import com.jiananwang.iot.service.BytesQueueService2;
 import org.apache.commons.codec.binary.Hex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +13,7 @@ import org.springframework.context.ApplicationContext;
 
 @Configurable
 public class SerialReader implements Runnable {
-	Logger logger = LoggerFactory.getLogger(BytesQueueService.class);
+	Logger logger = LoggerFactory.getLogger(SerialReader.class);
 
 	private ApplicationContext appContext;
 	
@@ -46,7 +46,7 @@ public class SerialReader implements Runnable {
 	 * @param bytes
 	 */
 	private void put(byte[] bytes) {
-		BytesQueueService bytesQueueService = (BytesQueueService)appContext.getBean("bytesQueueService");
+		BytesQueueService2 bytesQueueService = (BytesQueueService2)appContext.getBean("bytesQueueService2");
 		if (bytesQueueService != null) {
 			bytesQueueService.put(bytes);
 		} else {

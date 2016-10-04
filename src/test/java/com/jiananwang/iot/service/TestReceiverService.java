@@ -13,7 +13,7 @@ import org.springframework.util.Assert;
 @SpringBootTest
 @WebAppConfiguration
 public class TestReceiverService {
-    @Autowired private BytesQueueService bytesQueueService;
+    @Autowired private BytesQueueService2 bytesQueueService;
 
     @Test
     public void test() {
