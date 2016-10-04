@@ -71,7 +71,7 @@ public class UploadService implements Runnable {
 
                         if (currentList.size() > 1) { // 0xA0 SIZE
                             int size = currentList.get(1);
-                            if (currentList.size() >= size) {
+                            if (currentList.size() >= size + 2) {
                                 populate();
                             }
                         }
