@@ -3,6 +3,9 @@ package com.jiananwang.iot.serial;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import com.jiananwang.iot.service.ImpinjCommandService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
@@ -18,6 +21,8 @@ import gnu.io.SerialPort;
 
 @Service
 public class SerialPortRW {
+	private Logger logger = LoggerFactory.getLogger(SerialPortRW.class);
+
 	@Autowired
 	private ApplicationContext appContext;
 	
@@ -28,7 +33,7 @@ public class SerialPortRW {
 	public void connect(String portName) throws Exception {
 		CommPortIdentifier portIdentifier = CommPortIdentifier.getPortIdentifier(portName);
 		if (portIdentifier.isCurrentlyOwned()) {
-			System.out.println("Error: Port is currently in use");
+			logger.error("Error: Port is currently in use");
 		} else {
 			int timeout = 2000;
 			CommPort commPort = portIdentifier.open(this.getClass().getName(), timeout);
@@ -46,7 +51,7 @@ public class SerialPortRW {
 				startRWThread(in, out);
 
 			} else {
-				System.out.println("Error: Only serial ports are handled by this example.");
+				logger.error("Error: Only serial ports are handled by this example.");
 			}
 		}
 	}

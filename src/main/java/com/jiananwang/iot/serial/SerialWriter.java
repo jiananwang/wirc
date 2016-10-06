@@ -5,6 +5,8 @@ import java.io.OutputStream;
 
 import com.jiananwang.iot.registery.GlobalRegistry;
 import com.jiananwang.iot.util.CheckSum;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.ApplicationContext;
@@ -12,6 +14,8 @@ import org.springframework.web.context.ContextLoader;
 
 @Configurable
 public class SerialWriter implements Runnable {
+	private Logger logger = LoggerFactory.getLogger(SerialWriter.class);
+
 	private ApplicationContext appContext;
 	
 	private OutputStream out;
@@ -32,8 +36,8 @@ public class SerialWriter implements Runnable {
 		ApplicationContext context = ContextLoader.getCurrentWebApplicationContext();
 		globalRegistry = (GlobalRegistry)appContext.getBean("globalRegistry");
 
-		System.out.println("--------------------------------");
-		System.out.println(appContext == null);
+		logger.debug("--------------------------------");
+		logger.debug(String.valueOf(appContext == null));
 		
 		
 		try {
@@ -65,11 +69,11 @@ public class SerialWriter implements Runnable {
 					}
 
 					byte[] b = new byte[] { (byte)0xA0, 0x04, 0x01, (byte)0x80, 0x0A, (byte)0xD1 };
-					this.out.write(b); System.out.println("read into buffer");
+					this.out.write(b); logger.debug("read into buffer");
 
 					Thread.sleep(5000);
 					b = new byte[] { (byte)0xA0, 0x03, 0x01, (byte)0x90, (byte)0xCC};
-					this.out.write(b); System.out.println("read from buffer");
+					this.out.write(b); logger.debug("read from buffer");
 
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {

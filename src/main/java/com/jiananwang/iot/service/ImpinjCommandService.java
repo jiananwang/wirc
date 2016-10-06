@@ -4,6 +4,8 @@ import com.jiananwang.iot.constant.ImpinjCommands;
 import com.jiananwang.iot.constant.ImpinjErrors;
 import com.jiananwang.iot.registery.GlobalRegistry;
 import com.jiananwang.iot.service.queue.LocalRWQueueService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.PropertySource;
@@ -19,6 +21,8 @@ import java.util.concurrent.LinkedBlockingDeque;
 @Service
 @PropertySource("application.properties")
 public class ImpinjCommandService implements Runnable {
+    private Logger logger = LoggerFactory.getLogger(ImpinjCommandService.class);
+
     private ApplicationContext appContext;
 
     // The time thread sleep between 2 uploads
@@ -45,7 +49,7 @@ public class ImpinjCommandService implements Runnable {
 
     @Override
     public void run() {
-        bytesQueueService = (LocalRWQueueService)appContext.getBean("bytesQueueService2");
+        bytesQueueService = (LocalRWQueueService)appContext.getBean("localRWQueueService");
         globalRegistry = (GlobalRegistry)appContext.getBean("globalRegistry");
 
         while (true) {
@@ -94,14 +98,14 @@ public class ImpinjCommandService implements Runnable {
                 // Antenna OK
                 if (currentList.get(3) == ImpinjCommands.SET_ANTENNA && currentList.get(4) == ImpinjErrors.SUCCESS) {
                     globalRegistry.setAntenna(globalRegistry.getDefaultAntenna());
-                    System.out.println(String.format("[ImpinjCommandService: populate] antenna set: %1s", globalRegistry.getAntenna()));
+                    logger.debug(String.format("[ImpinjCommandService: populate] antenna set: %1s", globalRegistry.getAntenna()));
                     return;
                 }
 
 
 
             }
-            System.out.println(String.format("[ImpinjCommandService: populate] size: %1s", currentList.size()));
+            logger.debug(String.format("[ImpinjCommandService: populate] size: %1s", currentList.size()));
             this.uploadQueue.add(currentList);
         }
         currentList = null;

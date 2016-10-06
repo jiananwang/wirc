@@ -33,7 +33,7 @@ public class SerialReader implements Runnable {
 			while ((len = this.in.read(buffer)) > -1) {
 				byte[] dst = Arrays.copyOf(buffer, len);
 				put(dst);
-				System.out.print(Hex.encodeHex(dst));
+				logger.debug(String.valueOf(Hex.encodeHex(dst)));
 
 			}
 		} catch (IOException e) {
@@ -46,7 +46,7 @@ public class SerialReader implements Runnable {
 	 * @param bytes
 	 */
 	private void put(byte[] bytes) {
-		LocalRWQueueService bytesQueueService = (LocalRWQueueService)appContext.getBean("bytesQueueService2");
+		LocalRWQueueService bytesQueueService = (LocalRWQueueService)appContext.getBean("localRWQueueService");
 		if (bytesQueueService != null) {
 			bytesQueueService.put(bytes);
 		} else {
