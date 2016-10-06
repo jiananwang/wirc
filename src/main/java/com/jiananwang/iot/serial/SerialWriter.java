@@ -3,11 +3,11 @@ package com.jiananwang.iot.serial;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import com.jiananwang.iot.constant.ImpinjCommands;
 import com.jiananwang.iot.registery.GlobalRegistry;
 import com.jiananwang.iot.util.CheckSum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.ContextLoader;
@@ -56,7 +56,7 @@ public class SerialWriter implements Runnable {
 				try {
 					// 1. set antenna
 					if (globalRegistry.getAntenna() < 0) {
-						byte[] b = new byte[] { (byte)0xA0, 0x04, 0x01, (byte)0x74, 0x03, 0x00 };
+						byte[] b = ImpinjCommands.newSetAntenna();
 //						byte[] b = new byte[] { (byte)0xA0, 0x04, 0x01, (byte)0x80, 0x0A, (byte)0xD1 };
 						byte check_sum = CheckSum.impinjCheckSum(b, 5);
 						b[5] = check_sum;
@@ -68,11 +68,13 @@ public class SerialWriter implements Runnable {
 						continue;
 					}
 
-					byte[] b = new byte[] { (byte)0xA0, 0x04, 0x01, (byte)0x80, 0x0A, (byte)0xD1 };
+					byte[] b = ImpinjCommands.newReadIntoBuffer();
+//					byte[] b = new byte[] { (byte)0xA0, 0x04, 0x01, (byte)0x80, 0x0A, (byte)0xD1 };
 					this.out.write(b); logger.debug("read into buffer");
 
 					Thread.sleep(5000);
-					b = new byte[] { (byte)0xA0, 0x03, 0x01, (byte)0x90, (byte)0xCC};
+					b = ImpinjCommands.newReadFromBuffer();
+//					b = new byte[] { (byte)0xA0, 0x03, 0x01, (byte)0x90, (byte)0xCC};
 					this.out.write(b); logger.debug("read from buffer");
 
 					Thread.sleep(1000);
