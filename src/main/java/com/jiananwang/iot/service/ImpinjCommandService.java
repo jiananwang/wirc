@@ -3,6 +3,7 @@ package com.jiananwang.iot.service;
 import com.jiananwang.iot.constant.ImpinjCommands;
 import com.jiananwang.iot.constant.ImpinjErrors;
 import com.jiananwang.iot.registery.GlobalRegistry;
+import com.jiananwang.iot.service.queue.LocalRWQueueService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.PropertySource;
@@ -30,7 +31,7 @@ public class ImpinjCommandService implements Runnable {
 
 
 
-    private BytesQueueService2 bytesQueueService;
+    private LocalRWQueueService bytesQueueService;
     private GlobalRegistry globalRegistry;
 
 
@@ -44,7 +45,7 @@ public class ImpinjCommandService implements Runnable {
 
     @Override
     public void run() {
-        bytesQueueService = (BytesQueueService2)appContext.getBean("bytesQueueService2");
+        bytesQueueService = (LocalRWQueueService)appContext.getBean("bytesQueueService2");
         globalRegistry = (GlobalRegistry)appContext.getBean("globalRegistry");
 
         while (true) {
@@ -96,6 +97,7 @@ public class ImpinjCommandService implements Runnable {
                     System.out.println(String.format("[ImpinjCommandService: populate] antenna set: %1s", globalRegistry.getAntenna()));
                     return;
                 }
+
 
 
             }

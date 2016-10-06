@@ -1,4 +1,4 @@
-package com.jiananwang.iot.service;
+package com.jiananwang.iot.service.queue;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,8 +12,8 @@ import java.util.concurrent.LinkedBlockingDeque;
  *
  */
 @Service
-public class BytesQueueService2 {
-    Logger logger = LoggerFactory.getLogger(BytesQueueService2.class);
+public class LocalRWQueueService {
+    private Logger logger = LoggerFactory.getLogger(LocalRWQueueService.class);
 
     /**
      * Thread safe blocking queue for read and write. Note it receives byte[] instead of byte.

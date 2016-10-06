@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 
-import com.jiananwang.iot.service.BytesQueueService2;
+import com.jiananwang.iot.service.queue.LocalRWQueueService;
 import org.apache.commons.codec.binary.Hex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,7 +46,7 @@ public class SerialReader implements Runnable {
 	 * @param bytes
 	 */
 	private void put(byte[] bytes) {
-		BytesQueueService2 bytesQueueService = (BytesQueueService2)appContext.getBean("bytesQueueService2");
+		LocalRWQueueService bytesQueueService = (LocalRWQueueService)appContext.getBean("bytesQueueService2");
 		if (bytesQueueService != null) {
 			bytesQueueService.put(bytes);
 		} else {

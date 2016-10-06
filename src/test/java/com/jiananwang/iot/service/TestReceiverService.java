@@ -1,5 +1,6 @@
 package com.jiananwang.iot.service;
 
+import com.jiananwang.iot.service.queue.LocalRWQueueService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,7 @@ import org.springframework.util.Assert;
 @SpringBootTest
 @WebAppConfiguration
 public class TestReceiverService {
-    @Autowired private BytesQueueService2 bytesQueueService;
+    @Autowired private LocalRWQueueService bytesQueueService;
 
     @Test
     public void test() {
