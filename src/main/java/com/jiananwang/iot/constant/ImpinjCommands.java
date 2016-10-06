@@ -15,13 +15,17 @@ public class ImpinjCommands {
     }
 
     /**
-     * Read fron device into buffer
+     * Read antenna data into device buffer
      * @return
      */
     public static byte[] newReadIntoBuffer() {
         return new byte[] { (byte)0xA0, 0x04, 0x01, (byte)0x80, 0x0A, (byte)0xD1 };
     }
 
+    /**
+     * Read data from device buffer
+     * @return
+     */
     public static byte[] newReadFromBuffer() {
         return new byte[] { (byte)0xA0, 0x03, 0x01, (byte)0x90, (byte)0xCC};
     }
