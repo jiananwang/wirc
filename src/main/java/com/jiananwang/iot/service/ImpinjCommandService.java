@@ -17,7 +17,7 @@ import java.util.concurrent.LinkedBlockingDeque;
  */
 @Service
 @PropertySource("application.properties")
-public class UploadService implements Runnable {
+public class ImpinjCommandService implements Runnable {
     private ApplicationContext appContext;
 
     // The time thread sleep between 2 uploads
@@ -35,7 +35,7 @@ public class UploadService implements Runnable {
 
 
 
-    public UploadService(ApplicationContext context) {
+    public ImpinjCommandService(ApplicationContext context) {
         this.appContext = context;
     }
 
@@ -77,15 +77,6 @@ public class UploadService implements Runnable {
                         }
                     }
                 }
-
-//
-//                if (bytesQueueService.size() > 20) {
-//                    while (bytesQueueService.size() > 0) {
-//                        bytesQueueService.poll();
-//                        //System.out.println();
-//                        System.out.println(" queue size: " + bytesQueueService.size());
-//                    }
-//                }
             }
 
             try {
@@ -98,16 +89,17 @@ public class UploadService implements Runnable {
 
     public void populate() {
         if (currentList != null && currentList.size() > 0) {
+            if (currentList.size() > 5) { // something meaningful
+                // Antenna OK
+                if (currentList.get(3) == ImpinjCommands.SET_ANTENNA && currentList.get(4) == ImpinjErrors.SUCCESS) {
+                    globalRegistry.setAntenna(globalRegistry.getDefaultAntenna());
+                    System.out.println(String.format("[ImpinjCommandService: populate] antenna set: %1s", globalRegistry.getAntenna()));
+                    return;
+                }
 
-            if (    currentList.size() > 5 &&
-                    currentList.get(3) == ImpinjCommands.SET_ANTENNA &&
-                    currentList.get(4) == ImpinjErrors.SUCCESS)
-            {
-                globalRegistry.setAntenna(globalRegistry.getDefaultAntenna());
-                System.out.println(String.format("[UploadService: populate] antenna set: %1s", globalRegistry.getAntenna()));
-                return;
+
             }
-            System.out.println(String.format("[UploadService: populate] size: %1s", currentList.size()));
+            System.out.println(String.format("[ImpinjCommandService: populate] size: %1s", currentList.size()));
             this.uploadQueue.add(currentList);
         }
         currentList = null;
