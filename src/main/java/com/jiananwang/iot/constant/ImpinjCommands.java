@@ -34,6 +34,10 @@ public class ImpinjCommands {
         return new byte[] { (byte)0xA0, 0x03, 0x01, (byte)0x90, (byte)0xCC};
     }
 
+    /**
+     * Read data from device buffer, and reset buffer right after
+     * @return
+     */
     public static byte[] newReadFromBuffer_Reset() {
         return new byte[] { (byte)0xA0, 0x03, 0x01, (byte)0x91, (byte)0xCB};
     }
