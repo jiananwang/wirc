@@ -98,16 +98,20 @@ public class ImpinjCommandService implements Runnable {
     public void populate() {
         if (currentList != null && currentList.size() > 0) {
             if (currentList.size() > 5) { // something meaningful
-                // Antenna OK
+                // Antenna OK (0x74)
                 if (currentList.get(3) == ImpinjCommands.SET_ANTENNA && currentList.get(4) == ImpinjErrors.SUCCESS) {
                     globalRegistry.setAntenna(globalRegistry.getDefaultAntenna());
                     logger.debug(String.format("[ImpinjCommandService: populate] antenna set: %1s", globalRegistry.getAntenna()));
                 }
+
+                // Read inventory buffer done (0x91)
                 if (currentList.get(3) == ImpinjCommands.INVENTORY_BUFFER_RESET && currentList.get(1) > 4){
-                    // Read inventory buffer done
+
                     byte[] len = new byte[] {currentList.get(4), currentList.get(5)};
                     int length = ByteUtil.byteArrayToInt(len);
-                    logger.info("....................." + length);
+                    logger.debug("....................." + length);
+
+
                     this.uploadQueue.add(currentList);
                 }
             }

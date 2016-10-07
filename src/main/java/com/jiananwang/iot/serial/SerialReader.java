@@ -33,7 +33,7 @@ public class SerialReader implements Runnable {
 			while ((len = this.in.read(buffer)) > -1) {
 				byte[] dst = Arrays.copyOf(buffer, len);
 				put(dst);
-				logger.debug(String.valueOf(Hex.encodeHex(dst)));
+				logger.debug("[READER] -> " + String.valueOf(Hex.encodeHex(dst)));
 
 			}
 		} catch (IOException e) {
