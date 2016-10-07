@@ -6,6 +6,10 @@ package com.jiananwang.iot.constant;
 public class ImpinjCommands {
     public static final byte SET_ANTENNA = (byte) 0x74;
 
+    public static final byte INVENTORY_BUFFER = (byte) 0x90;
+
+    public static final byte INVENTORY_BUFFER_RESET = (byte) 0x91;
+
     /**
      * Set current working antenna
      * @return
@@ -28,5 +32,9 @@ public class ImpinjCommands {
      */
     public static byte[] newReadFromBuffer() {
         return new byte[] { (byte)0xA0, 0x03, 0x01, (byte)0x90, (byte)0xCC};
+    }
+
+    public static byte[] newReadFromBuffer_Reset() {
+        return new byte[] { (byte)0xA0, 0x03, 0x01, (byte)0x91, (byte)0xCB};
     }
 }

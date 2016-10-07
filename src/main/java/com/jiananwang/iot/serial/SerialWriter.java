@@ -73,7 +73,7 @@ public class SerialWriter implements Runnable {
 					this.out.write(b); logger.debug("read into buffer");
 
 					Thread.sleep(5000);
-					b = ImpinjCommands.newReadFromBuffer();
+					b = ImpinjCommands.newReadFromBuffer_Reset();
 //					b = new byte[] { (byte)0xA0, 0x03, 0x01, (byte)0x90, (byte)0xCC};
 					this.out.write(b); logger.debug("read from buffer");
 

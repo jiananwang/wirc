@@ -4,11 +4,13 @@ import com.jiananwang.iot.constant.ImpinjCommands;
 import com.jiananwang.iot.constant.ImpinjErrors;
 import com.jiananwang.iot.registery.GlobalRegistry;
 import com.jiananwang.iot.service.queue.LocalRWQueueService;
+import com.jiananwang.iot.util.ByteUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.data.redis.util.ByteUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -78,6 +80,7 @@ public class ImpinjCommandService implements Runnable {
                             int size = currentList.get(1);
                             if (currentList.size() >= size + 2) {
                                 populate();
+                                continue;
                             }
                         }
                     }
@@ -99,14 +102,17 @@ public class ImpinjCommandService implements Runnable {
                 if (currentList.get(3) == ImpinjCommands.SET_ANTENNA && currentList.get(4) == ImpinjErrors.SUCCESS) {
                     globalRegistry.setAntenna(globalRegistry.getDefaultAntenna());
                     logger.debug(String.format("[ImpinjCommandService: populate] antenna set: %1s", globalRegistry.getAntenna()));
-                    return;
                 }
-
-
-
+                if (currentList.get(3) == ImpinjCommands.INVENTORY_BUFFER_RESET && currentList.get(1) > 4){
+                    // Read inventory buffer done
+                    byte[] len = new byte[] {currentList.get(4), currentList.get(5)};
+                    int length = ByteUtil.byteArrayToInt(len);
+                    logger.info("....................." + length);
+                    this.uploadQueue.add(currentList);
+                }
             }
             logger.debug(String.format("[ImpinjCommandService: populate] size: %1s", currentList.size()));
-            this.uploadQueue.add(currentList);
+
         }
         currentList = null;
     }
