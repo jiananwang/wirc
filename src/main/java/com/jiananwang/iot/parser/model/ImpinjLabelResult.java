@@ -12,6 +12,11 @@ public class ImpinjLabelResult {
     private int Antenna;
     private int InvCount;
 
+    @Override
+    public String toString() {
+        return String.format("%s | %s | %s | %d | %d | %d | %d", PC, EPC, CRC, RSSI, Frequent, Antenna, InvCount);
+    }
+
     public String getPC() {
         return PC;
     }

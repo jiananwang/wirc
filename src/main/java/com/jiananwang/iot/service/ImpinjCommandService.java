@@ -2,6 +2,8 @@ package com.jiananwang.iot.service;
 
 import com.jiananwang.iot.constant.ImpinjCommands;
 import com.jiananwang.iot.constant.ImpinjErrors;
+import com.jiananwang.iot.parser.ImpinjResultParser;
+import com.jiananwang.iot.parser.model.ImpinjLabelResult;
 import com.jiananwang.iot.registery.GlobalRegistry;
 import com.jiananwang.iot.service.queue.LocalRWQueueService;
 import com.jiananwang.iot.util.ByteUtil;
@@ -14,6 +16,7 @@ import org.springframework.data.redis.util.ByteUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingDeque;
 
@@ -111,8 +114,10 @@ public class ImpinjCommandService implements Runnable {
                     int length = ByteUtil.byteArrayToInt(len);
                     logger.debug("....................." + length);
 
+                    ImpinjLabelResult result = ImpinjResultParser.parse(ByteUtil.toPrimitive( currentList ));
 
-                    this.uploadQueue.add(currentList);
+                    logger.debug(result.toString());
+//                    this.uploadQueue.add(currentList);
                 }
             }
             logger.debug(String.format("[ImpinjCommandService: populate] size: %1s", currentList.size()));
