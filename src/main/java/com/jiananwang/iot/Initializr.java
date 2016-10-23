@@ -1,7 +1,7 @@
 package com.jiananwang.iot;
 
 import com.jiananwang.iot.serial.SerialPortRW;
-import com.jiananwang.iot.service.ImpinjCommandService;
+import com.jiananwang.iot.biz.publisher.ImpinjCommandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
