@@ -5,6 +5,7 @@ import com.jiananwang.iot.constant.ImpinjErrors;
 import com.jiananwang.iot.parser.ImpinjResultParser;
 import com.jiananwang.iot.parser.model.ImpinjLabelResult;
 import com.jiananwang.iot.registery.GlobalRegistry;
+import com.jiananwang.iot.service.model.UploadChamber;
 import com.jiananwang.iot.service.queue.LocalRWQueueService;
 import com.jiananwang.iot.util.ByteUtil;
 import org.slf4j.Logger;
@@ -43,6 +44,9 @@ public class ImpinjCommandService implements Runnable {
     private LocalRWQueueService bytesQueueService;
     private GlobalRegistry globalRegistry;
 
+
+    // when the chamber is full then make upload
+    private UploadChamber<ImpinjLabelResult> uploadChamber;
 
 
     public ImpinjCommandService(ApplicationContext context) {
@@ -111,10 +115,24 @@ public class ImpinjCommandService implements Runnable {
                 if (currentList.get(3) == ImpinjCommands.INVENTORY_BUFFER_RESET && currentList.get(1) > 4){
 
                     byte[] len = new byte[] {currentList.get(4), currentList.get(5)};
-                    int length = ByteUtil.byteArrayToInt(len);
-                    logger.debug("....................." + length);
+                    int count = ByteUtil.byteArrayToInt(len);
+                    logger.debug("..................... label count: " + count);
 
                     ImpinjLabelResult result = ImpinjResultParser.parse(ByteUtil.toPrimitive( currentList ));
+
+
+                    if (this.uploadChamber == null) {
+                        this.uploadChamber = new UploadChamber(count);
+                    }
+
+                    if (!this.uploadChamber.isFull()) {
+                        this.uploadChamber.add(result);
+                    }else{
+                        // TODO: upload
+
+                        logger.debug(" >>>>>>>>>>>>>>>>>>>>>>>>>>>>>> upload >>>>>>>>>>>>>>>>>>>");
+                        this.uploadChamber = null;
+                    }
 
                     logger.debug(result.toString());
 //                    this.uploadQueue.add(currentList);
