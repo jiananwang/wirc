@@ -133,6 +133,7 @@ public class ImpinjCommandService implements Runnable {
                             // TODO: upload
 
                             logger.debug(" >>>>>>>>>>>>>>>>>>>>>>>>>>>>>> upload >>>>>>>>>>>>>>>>>>>");
+                            Publisher.post(this.uploadChamber.getUploadList(), logger);
                             this.uploadChamber = null;
                         }
                     }
