@@ -121,17 +121,22 @@ public class ImpinjCommandService implements Runnable {
                     ImpinjLabelResult result = ImpinjResultParser.parse(ByteUtil.toPrimitive( currentList ));
 
 
-                    if (this.uploadChamber == null) {
-                        this.uploadChamber = new UploadChamber(count);
-                    }
+                    {
+                        // misc check and upload
+                        if (this.uploadChamber == null) {
+                            this.uploadChamber = new UploadChamber(count);
+                        }
 
-                    if (!this.uploadChamber.isFull()) {
-                        this.uploadChamber.add(result);
-                    }else{
-                        // TODO: upload
+                        if (!this.uploadChamber.isFull()) {
+                            this.uploadChamber.add(result);
+                        }
 
-                        logger.debug(" >>>>>>>>>>>>>>>>>>>>>>>>>>>>>> upload >>>>>>>>>>>>>>>>>>>");
-                        this.uploadChamber = null;
+                        if (this.uploadChamber.isFull()) {
+                            // TODO: upload
+
+                            logger.debug(" >>>>>>>>>>>>>>>>>>>>>>>>>>>>>> upload >>>>>>>>>>>>>>>>>>>");
+                            this.uploadChamber = null;
+                        }
                     }
 
                     logger.debug(result.toString());
