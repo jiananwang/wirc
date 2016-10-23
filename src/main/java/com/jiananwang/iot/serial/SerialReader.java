@@ -4,8 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 
-import com.jiananwang.iot.service.queue.LocalRWQueueService;
-import org.apache.commons.codec.binary.Hex;
+import com.jiananwang.iot.biz.publisher.queue.LocalRWQueueService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Configurable;

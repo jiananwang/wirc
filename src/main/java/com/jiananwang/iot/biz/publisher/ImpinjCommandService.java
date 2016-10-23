@@ -1,23 +1,21 @@
-package com.jiananwang.iot.service;
+package com.jiananwang.iot.biz.publisher;
 
 import com.jiananwang.iot.constant.ImpinjCommands;
 import com.jiananwang.iot.constant.ImpinjErrors;
 import com.jiananwang.iot.parser.ImpinjResultParser;
 import com.jiananwang.iot.parser.model.ImpinjLabelResult;
 import com.jiananwang.iot.registery.GlobalRegistry;
-import com.jiananwang.iot.service.model.UploadChamber;
-import com.jiananwang.iot.service.queue.LocalRWQueueService;
+import com.jiananwang.iot.biz.publisher.model.UploadChamber;
+import com.jiananwang.iot.biz.publisher.queue.LocalRWQueueService;
 import com.jiananwang.iot.util.ByteUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.data.redis.util.ByteUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingDeque;
 
