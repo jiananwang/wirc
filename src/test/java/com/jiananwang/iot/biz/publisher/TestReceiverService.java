@@ -1,6 +1,5 @@
 package com.jiananwang.iot.biz.publisher;
 
-import com.jiananwang.iot.biz.publisher.queue.LocalRWQueueService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

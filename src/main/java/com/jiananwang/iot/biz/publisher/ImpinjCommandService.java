@@ -6,7 +6,6 @@ import com.jiananwang.iot.parser.ImpinjResultParser;
 import com.jiananwang.iot.parser.model.ImpinjLabelResult;
 import com.jiananwang.iot.registery.GlobalRegistry;
 import com.jiananwang.iot.biz.publisher.model.UploadChamber;
-import com.jiananwang.iot.biz.publisher.queue.LocalRWQueueService;
 import com.jiananwang.iot.util.ByteUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
