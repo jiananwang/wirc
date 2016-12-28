@@ -18,3 +18,16 @@
 
 6. install RXTX
   -> sudo apt-get install librxtx-java
+
+
+############################################
+## Quick commands: YU KE
+############################################
+# reader version
+A0 03 FF 00 5E
+
+# setup antena
+A0 05 FF 11 04 01 46
+
+# read label
+A0 03 FF 31 2D
