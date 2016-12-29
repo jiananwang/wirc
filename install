@@ -26,7 +26,7 @@
 # reader version
 A0 03 FF 00 5E
 
-# setup antena
+# setup antenna
 A0 05 FF 11 04 01 46
 
 # read label
